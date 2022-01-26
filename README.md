@@ -1,4 +1,4 @@
-# Stealth 🥷
+# 🥷 The Agent 🥷
 
-- [ ] Scraping Agent for the Airtable
-- [ ] Prospecting Agent for the Airtable
+- [ ] Scraping Crunchbase Companies (w/ Airtable Sync)
+- [ ] Prospecting Crunchbase Companies (w/ Airtable Sync)
