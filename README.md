@@ -1,4 +1,8 @@
-# 🥷 The Agent 🥷
+# The Agent 🥷
+"Nobody can give you freedom. Nobody can give you equality or justice or anything. If you're a man, you take it." — Malcom X
 
-- [ ] Scraping Crunchbase Companies (w/ Airtable Sync)
-- [ ] Prospecting Crunchbase Companies (w/ Airtable Sync)
+### Features
+- [ ] Distributed Crunchbase Contact Scrape (w/ Airtable Sync)
+- [ ] Distributed Crunchbase Companies Prospecting (w/ Airtable Sync)
+- [ ] Contact Enrichment
+- [ ] Customer.Io Upload
