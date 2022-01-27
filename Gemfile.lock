@@ -73,6 +73,7 @@ GEM
     bootsnap (1.10.2)
       msgpack (~> 1.2)
     builder (3.2.4)
+    byebug (11.1.3)
     childprocess (4.1.0)
     concurrent-ruby (1.1.9)
     connection_pool (2.2.5)
@@ -238,6 +239,7 @@ PLATFORMS
 DEPENDENCIES
   airrecord
   bootsnap
+  byebug
   debug
   dotenv-rails
   pg (~> 1.1)
