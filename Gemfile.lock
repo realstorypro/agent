@@ -71,6 +71,9 @@ GEM
     airrecord (1.0.7)
       faraday (>= 0.10, < 2.0)
       net-http-persistent
+    annotate (2.6.5)
+      activerecord (>= 2.3.0)
+      rake (>= 0.8.7)
     ast (2.4.2)
     bootsnap (1.10.2)
       msgpack (~> 1.2)
@@ -257,6 +260,7 @@ PLATFORMS
 
 DEPENDENCIES
   airrecord
+  annotate (~> 2.6)
   bootsnap
   byebug
   clipboard

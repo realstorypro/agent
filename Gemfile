@@ -6,9 +6,9 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 ruby '3.0.3'
 
 gem 'airrecord'
+gem 'bootsnap', require: false
 gem 'customerio'
 gem 'httparty'
-gem 'bootsnap', require: false
 gem 'jsonb_accessor'
 gem 'pg', '~> 1.1'
 gem 'puma', '~> 5.0'
@@ -29,3 +29,5 @@ end
 group :development do
   gem 'spring'
 end
+
+gem 'annotate', '~> 2.6'

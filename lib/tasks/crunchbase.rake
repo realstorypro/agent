@@ -14,7 +14,7 @@ namespace :crunchbase do
     companies = Airtable::Company.all(filter: '{Scraped} = FALSE()')
 
     companies.shuffle.each do |company_name|
-      bot.scrape(company_name: company_name.fields["Name"])
+      bot.scrape(company_name: company_name.fields['Name'])
     end
   end
 
