@@ -6,13 +6,13 @@ module Scraper
     BASE_URL = 'https://www.crunchbase.com'
 
     def initialize
-      # args = ['--disable-blink-features=AutomationControlled']
-      # options = Selenium::WebDriver::Chrome::Options.new(args: args)
-
       options = Selenium::WebDriver::Chrome::Options.new
       options.add_argument('--disable-blink-features=AutomationControlled')
+      # options.add_argument('user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/97.0.4692.99 Safari/537.36')
+      # options.add_argument('window-size=960,780')
 
       @driver = Selenium::WebDriver::Driver.for :chrome, capabilities: options
+
     end
 
     def scrape(companies:)
@@ -33,6 +33,10 @@ module Scraper
 
       # 1. Lets go to google, and search for the crunchbase query
       @driver.get("https://www.google.com/search?q=#{ERB::Util.url_encode(company.name)} crunchbase")
+
+      # lets et rid of the navigator.webdriver, because
+      # it can be used to detect a scraper
+      # @driver.execute_script("Object.defineProperty(navigator, 'webdriver', {get: () => undefined})")
 
       # 2. Lets click that link
       @driver.find_elements(:xpath, "(//div[@class='yuRUbf'])[1]//a")[0].click
