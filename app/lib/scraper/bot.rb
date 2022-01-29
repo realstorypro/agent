@@ -4,10 +4,17 @@ module Scraper
   # Responsible for all the scraping logic
   class Bot
     BASE_URL = 'https://www.crunchbase.com'
+    # HEADLESS_PROXY = "localhost:3128"
 
     def initialize
+
       options = Selenium::WebDriver::Chrome::Options.new
       options.add_argument('--disable-blink-features=AutomationControlled')
+
+      # options.add_argument("--proxy-server=http://#{HEADLESS_PROXY}")
+      # options.add_argument('--ignore-ssl-errors=yes')
+      # options.add_argument('--ignore-certificate-errors')
+
       # options.add_argument('user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/97.0.4692.99 Safari/537.36')
       # options.add_argument('window-size=960,780')
 
@@ -32,6 +39,8 @@ module Scraper
       Rails.logger.debug "Scraping #{company.name}"
 
       # 1. Lets go to google, and search for the crunchbase query
+      # @driver.get("https://www.crunchbase.com/organization/floydware")
+      # sleep(2000)
       @driver.get("https://www.google.com/search?q=#{ERB::Util.url_encode(company.name)} crunchbase")
 
       # lets et rid of the navigator.webdriver, because

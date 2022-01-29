@@ -1,0 +1,13 @@
+adblock_lists = [
+  "https://easylist.to/easylist/easylist.txt",
+  "https://easylist.to/easylist/easyprivacy.txt"
+]
+
+direct_access_hostpath_regexps = [
+  '.*?\.(?:txt|css|eot|gif|ico|jpe?g|js|less|mkv|mp4|mpe?g|png|ttf|webm|webp|woff2?)$'
+]
+
+[xheaders]
+no-bancheck = "1"
+profile = "pass"
+cookies = "disable"
