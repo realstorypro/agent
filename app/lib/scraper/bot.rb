@@ -29,7 +29,7 @@ module Scraper
       companies.shuffle.each_with_index do |company, index|
 
         # lets take a long break every 10 records to simulate a tired human
-        # sleep(rand(300..600)) if (index % 10).zero? && index != 0
+        sleep(rand(100..200)) if (index % 10).zero? && index != 0
 
         scrape_company(company: company)
       end
@@ -43,15 +43,6 @@ module Scraper
 
       # 2. Lets click that link
       @driver.find_elements(:xpath, "(//div[@class='yuRUbf'])[1]//a")[0].click
-
-      # lets et rid of the navigator.webdriver, because
-      # it can be used to detect a scraper
-      # @driver.execute_async_script("document.head.setAttribute('perimeterx-id', '123')")
-
-      # sleep(rand(5000..10000))
-
-      # seems like the scraper gets detected if its starts acting too fast
-      sleep(rand(5..10))
 
       # 3. lets make sure that we pulled up the actual company
       begin
@@ -99,7 +90,7 @@ module Scraper
 
       company.save
 
-      # sleep(rand(45..100))
+      sleep(rand(10..25))
     end
 
     def msg_slack(msg)
