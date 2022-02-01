@@ -26,10 +26,10 @@ module Scraper
       # 2. Lets separate scraped companies vs scraped contacts
 
       # 3. Lets go through companies
-      companies.shuffle.each_with_index do |company, index|
+      companies.shuffle.each_with_index do |company index|
 
         # lets take a long break every 10 records to simulate a tired human
-        sleep(rand(300..600)) if (index % 10).zero? && index != 0
+        # sleep(rand(300..600)) if (index % 10).zero? && index != 0
 
         scrape_company(company: company)
       end
@@ -39,16 +39,16 @@ module Scraper
       Rails.logger.debug "Scraping #{company.name}"
 
       # 1. Lets go to google, and search for the crunchbase query
-      # @driver.get("https://www.crunchbase.com/organization/floydware")
-      # sleep(2000)
       @driver.get("https://www.google.com/search?q=#{ERB::Util.url_encode(company.name)} crunchbase")
-
-      # lets et rid of the navigator.webdriver, because
-      # it can be used to detect a scraper
-      # @driver.execute_script("Object.defineProperty(navigator, 'webdriver', {get: () => undefined})")
 
       # 2. Lets click that link
       @driver.find_elements(:xpath, "(//div[@class='yuRUbf'])[1]//a")[0].click
+
+      # lets et rid of the navigator.webdriver, because
+      # it can be used to detect a scraper
+      # @driver.execute_async_script("document.head.setAttribute('perimeterx-id', '123')")
+
+      # sleep(rand(5000..10000))
 
       # seems like the scraper gets detected if its starts acting too fast
       sleep(rand(5..10))
@@ -64,7 +64,7 @@ module Scraper
         return
       end
 
-      # 4. Does the company tab exist?
+      # 4. Does the people tab exist?
       begin
         @driver.find_element(:xpath, "//span[normalize-space()='People']")
         Rails.logger.debug "people's tab found"
@@ -99,7 +99,7 @@ module Scraper
 
       company.save
 
-      sleep(rand(45..100))
+      # sleep(rand(45..100))
     end
 
     def msg_slack(msg)
