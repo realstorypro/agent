@@ -8,13 +8,14 @@
 - [ ] Customer.Io Upload
 
 ### Setup
+1. Setup _mitmproxy_
 
-1. Install the Headless Proxy from Crawlera
-Setup SSL Certificate
-
-https://docs.zyte.com/smart-proxy-manager/next-steps/fetching-https-pages-with-smart-proxy.html#fetching-https-pages-with-smart-proxy-win-10
-
-2. Start with
 ```bash
- crawlera-headless-proxy -c config.toml -a API_KEY
+brew install mitmproxy
+```
+
+2. Start the _mitmproxy_ to disable peremetrix
+ 
+```bash
+ mitmproxy -s mitmproxy/crunchbase.py  
 ```

@@ -4,16 +4,16 @@ module Scraper
   # Responsible for all the scraping logic
   class Bot
     BASE_URL = 'https://www.crunchbase.com'
-    # HEADLESS_PROXY = "localhost:3128"
+    HEADLESS_PROXY = "localhost:8080"
 
     def initialize
 
       options = Selenium::WebDriver::Chrome::Options.new
       options.add_argument('--disable-blink-features=AutomationControlled')
 
-      # options.add_argument("--proxy-server=http://#{HEADLESS_PROXY}")
-      # options.add_argument('--ignore-ssl-errors=yes')
-      # options.add_argument('--ignore-certificate-errors')
+      options.add_argument("--proxy-server=http://#{HEADLESS_PROXY}")
+      options.add_argument('--ignore-ssl-errors=yes')
+      options.add_argument('--ignore-certificate-errors')
 
       # options.add_argument('user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/97.0.4692.99 Safari/537.36')
       # options.add_argument('window-size=960,780')
@@ -26,7 +26,7 @@ module Scraper
       # 2. Lets separate scraped companies vs scraped contacts
 
       # 3. Lets go through companies
-      companies.shuffle.each_with_index do |company index|
+      companies.shuffle.each_with_index do |company, index|
 
         # lets take a long break every 10 records to simulate a tired human
         # sleep(rand(300..600)) if (index % 10).zero? && index != 0

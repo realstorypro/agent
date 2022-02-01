@@ -31,3 +31,5 @@
 .idea/*
 .env
 .byebug_history
+
+/mitmproxy/__pycache__/
