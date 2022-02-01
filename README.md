@@ -6,3 +6,16 @@
 - [ ] Distributed Crunchbase Companies Prospecting (w/ Airtable Sync)
 - [ ] Contact Enrichment
 - [ ] Customer.Io Upload
+
+### Setup
+1. Setup _mitmproxy_
+
+```bash
+brew install mitmproxy
+```
+
+2. Start the _mitmproxy_ to disable peremetrix
+ 
+```bash
+ mitmproxy -s mitmproxy/crunchbase.py  
+```
