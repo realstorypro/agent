@@ -4,10 +4,9 @@ module Scraper
   # Responsible for all the scraping logic
   class Bot
     BASE_URL = 'https://www.crunchbase.com'
-    HEADLESS_PROXY = "localhost:8080"
+    HEADLESS_PROXY = 'localhost:8080'
 
     def initialize
-
       options = Selenium::WebDriver::Chrome::Options.new
       options.add_argument('--disable-blink-features=AutomationControlled')
 
@@ -15,22 +14,16 @@ module Scraper
       options.add_argument('--ignore-ssl-errors=yes')
       options.add_argument('--ignore-certificate-errors')
 
-      # options.add_argument('user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/97.0.4692.99 Safari/537.36')
-      # options.add_argument('window-size=960,780')
-
       @driver = Selenium::WebDriver::Driver.for :chrome, capabilities: options
-
     end
 
     def scrape(companies:)
-      # 2. Lets separate scraped companies vs scraped contacts
-
-      # 3. Lets go through companies
+      # 1. Lets go through companies
       companies.shuffle.each_with_index do |company, index|
-
-        # lets take a long break every 10 records to simulate a tired human
+        # 2. lets take a long break every 10 records to simulate a tired human
         sleep(rand(100..200)) if (index % 10).zero? && index != 0
 
+        # 3. lets scrape the company
         scrape_company(company: company)
       end
     end
@@ -91,6 +84,56 @@ module Scraper
       company.save
 
       sleep(rand(10..25))
+
+      # 7. lets scrape the contacts
+      scrape_contacts(company: company, url: "#{@driver.current_url}/people")
+    end
+
+    def scrape_contacts(company:, url:)
+      # 1. Lets pull up the URL
+      @driver.get(url)
+
+      sleep(20)
+
+      # 1.1 lets wait 5 seconds to ensure the page loads
+      sleep(5)
+
+      # 2. Lets find people
+      begin
+        names = @driver.find_elements(:xpath, "//contact-details//div[@class='name']//field-formatter")
+        titles = @driver.find_elements(:xpath, "//contact-details//div[@class='jobInfo']//div[1]")
+      rescue Selenium::WebDriver::Error::NoSuchElementError
+        Rails.logger.debug 'no people found'
+        return
+      end
+
+      # 3. Erase all company contacts prior to adding them
+      company.contacts.delete_all
+
+      # 4. Loop over the people and add them
+      names.each_with_index do |full_name, index|
+        # ignore if there's no title
+        next if titles[index].nil?
+
+        title = titles[index].text
+
+        # ignoring board members and advisors
+        next if ['Board Member', 'Advisor'].include?(title)
+
+        first_name = full_name.text.split(' ')[0]
+        last_name = full_name.text.split(' ')[1]
+
+        Rails.logger.debug "Found: #{title} #{first_name} #{last_name}"
+        company.contacts.create(first_name: first_name, last_name: last_name, title: title)
+      end
+
+      company.found = true
+      company.save
+
+      Rails.logger.debug "finished scraping #{company.name}"
+
+      # 5. Lets pause for a little bit to prevent automation detection
+      sleep(rand(15..30))
     end
 
     def msg_slack(msg)
