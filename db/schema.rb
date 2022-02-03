@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_01_28_140313) do
+ActiveRecord::Schema.define(version: 2022_02_03_192743) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -23,8 +23,6 @@ ActiveRecord::Schema.define(version: 2022_01_28_140313) do
     t.boolean "found", default: false
     t.boolean "error", default: false
     t.boolean "exported", default: false
-    t.boolean "scraped_company", default: false
-    t.boolean "scraped_contacts", default: false
     t.index ["name"], name: "index_companies_on_name", unique: true
   end
 
