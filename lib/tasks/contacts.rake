@@ -122,6 +122,36 @@ namespace :contacts do
     end
   end
 
+    desc 'uploading contacts to customer.io'
+  task :upload, [:number] => :environment do |_t, args|
+    msg_slack("Uploading #{args[:number]} contacts to customer.io")
+
+    $customerio = Customerio::Client.new(ENV['CUSTOMER_IO_SITE_ID'], ENV['CUSTOMER_IO_KEY'])
+
+    contacts =  Contact.where(uploaded: false, invalid_email: false).where.not(email: nil).limit(args[:number])
+
+    contacts.each do |contact|
+      $customerio.identify(
+        id: contact.email,
+        email: contact.email,
+        created_at: contact.created_at.to_i,
+        last_name: contact.last_name,
+        first_name: contact.first_name,
+        title: contact.title,
+        company: contact.company.name,
+        url: contact.company.url,
+        location: contact.company.location,
+        timezone: contact.timezone,
+        twitter: contact.twitter,
+        linkedin_url: contact.linkedin_url,
+        source: 'agent'
+      )
+
+      $customerio.track(contact.email, 'begin nurture')
+      contact.update(uploaded: true)
+    end
+  end
+
   def msg_slack(msg)
     HTTParty.post(ENV['SLACK_URL'].to_s, body: { text: msg }.to_json)
   end
