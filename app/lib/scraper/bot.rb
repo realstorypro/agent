@@ -20,11 +20,15 @@ module Scraper
     def scrape(companies:)
       # 1. Lets go through companies
       companies.shuffle.each_with_index do |company, index|
-        # 2. lets take a long break every 10 records to simulate a tired human
+        # 1. lets scrape the company
+        scrape_company(company: company)
+
+        # 2. Always start off with a random sleep
+        sleep(rand(10..20))
+
+        # 3. Lets take a long break every 10 records to simulate a tired human
         sleep(rand(100..200)) if (index % 10).zero? && index != 0
 
-        # 3. lets scrape the company
-        scrape_company(company: company)
       end
     end
 
@@ -92,8 +96,6 @@ module Scraper
     def scrape_contacts(company:, url:)
       # 1. Lets pull up the URL
       @driver.get(url)
-
-      sleep(20)
 
       # 1.1 lets wait 5 seconds to ensure the page loads
       sleep(5)
