@@ -24,5 +24,7 @@ class Contact < ApplicationRecord
                   title: :string,
                   lat: :string,
                   lng: :string,
-                  timezone: :string
+                  timezone: :string,
+                  twitter: :string,
+                  linkedin_url: :string
 end
