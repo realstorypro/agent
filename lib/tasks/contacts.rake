@@ -122,7 +122,7 @@ namespace :contacts do
     end
   end
 
-    desc 'uploading contacts to customer.io'
+  desc 'uploading contacts to customer.io'
   task :upload, [:number] => :environment do |_t, args|
     msg_slack("Uploading #{args[:number]} contacts to customer.io")
 
