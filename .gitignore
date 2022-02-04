@@ -33,3 +33,4 @@
 .byebug_history
 
 /mitmproxy/__pycache__/
+dump.sql
