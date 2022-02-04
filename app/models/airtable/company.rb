@@ -5,12 +5,12 @@ module Airtable
     self.base_key = 'appJsinKEWPlytT8z'
     self.table_name = 'Companies'
 
-    # def self.unscarped_owned
-    #   all(filter: "AND( {Scraped} = FALSE(), {Agent} = '#{ENV['AGENT_CODENAME']}' )")
-    # end
-
     def self.unscraped
-      all(filter: 'AND( {Scraped} = FALSE(), {Agent} = BLANK() )')
+      all(filter: '{Scraped} = FALSE()')
+    end
+
+    def self.scraped
+      all(filter: '{Scraped} = TRUE()')
     end
   end
 end
