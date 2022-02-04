@@ -9,7 +9,6 @@
 #  updated_at :datetime         not null
 #  found      :boolean          default("false")
 #  error      :boolean          default("false")
-#  exported   :boolean          default("false")
 #
 
 # frozen_string_literal: true

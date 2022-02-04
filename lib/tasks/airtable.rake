@@ -3,22 +3,20 @@
 namespace :airtable do
   desc 'TODO'
   task download: :environment do
-    remaining_companies = Company.where(found: false, error: false)
-
-    unless remaining_companies.count < 100
-      puts 'We still have over 100 companies to scrape. No download necessary.'
-
-      exit
-    end
+    # remaining_companies = Company.where(found: false, error: false)
 
     unscraped_records = Airtable::Company.unscraped
-    plucked_records = unscraped_records.sample(200)
-
-    plucked_records.each do |record|
+    unscraped_records.each do |record|
       Company.find_or_create_by(name: record.fields['Name'])
+      puts "adding unscraped #{record.fields['Name']}"
     end
 
-    puts unscraped_records.count, unscraped_records.class
+    scraped_records = Airtable::Company.scraped
+    scraped_records.each do |record|
+      Company.find_or_create_by(name: record.fields['Name'], found: true)
+      puts "adding scraped #{record.fields['Name']}"
+    end
+
   end
 
   desc 'TODO'
