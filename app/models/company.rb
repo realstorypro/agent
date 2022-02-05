@@ -9,6 +9,7 @@
 #  updated_at :datetime         not null
 #  found      :boolean          default("false")
 #  error      :boolean          default("false")
+#  agent      :string
 #
 
 # frozen_string_literal: true

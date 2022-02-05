@@ -1,16 +1,12 @@
 # frozen_string_literal: true
 
 namespace :crunchbase do
-  desc 'TODO'
+  desc 'scrapes crunchbase'
   task scrape: :environment do
 
     bot = Scraper::Bot.new
-    companies = Company.where(found: false, error: false, exported: false)
+    companies = Company.where(found: false, error: false, agent: ENV['AGENT_CODENAME'])
     bot.scrape(companies: companies)
-
-    # companies.shuffle.each do |company|
-    #   bot.scrape(company)
-    # end
   end
 
   desc 'TODO'
