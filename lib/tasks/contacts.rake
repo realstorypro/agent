@@ -95,8 +95,8 @@ namespace :contacts do
       end
 
       if email_finder_resp.parsed_response['data'].nil?
-          contact.update(invalid_email: true)
-          next
+        contact.update(invalid_email: true)
+        next
       end
 
       contact.update(email: email_finder_resp.parsed_response['data']['email'],
