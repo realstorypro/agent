@@ -1,4 +1,11 @@
 namespace :contacts do
+  desc 'invokes all contact processing tasks in sequence'
+  task process: :environment do
+    Rake::Task['contacts:enrich'].invoke
+    Rake::Task['contacts:find_email'].invoke
+    Rake::Task['contacts:upload'].invoke
+  end
+
   desc 'enrich the scraped contacts'
   task :enrich, [:number] => :environment do |_t, args|
     msg_slack("Enriching #{args[:number]} contacts")

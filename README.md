@@ -35,18 +35,9 @@ rake agent:take
 rake crunchbase:scrape
 ```
 
-### Uploading to Customer
-1. Enrich the contacts (/w geolocation info)
-```bash
-rake contacts:enrich
-```
+### Uploading to Customer.io
+_Note:_ This enriches and uploads __all__ contacts not just the ones assigned to the agent.
 
-2. Find & verify email addresses
 ```bash
-rake contacts:find_email
-```
-
-3. Upload the contacts to customer.io
-```bash
-rake contacts:upload
+rake contacts:process
 ```
