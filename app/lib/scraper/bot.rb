@@ -50,6 +50,9 @@ module Scraper
         company.save
 
         return
+      rescue Selenium::WebDriver::Error::StaleElementReferenceError
+        # sometimes this bugs out, lets just return and do it again at some point
+        return
       end
 
       # 4. Does the people tab exist?
@@ -63,6 +66,9 @@ module Scraper
         company.save
 
         return
+      rescue Selenium::WebDriver::Error::StaleElementReferenceError
+        # sometimes this bugs out, lets just return and do it again at some point
+        return
       end
 
       # 5. lets get the company url, and clean it up so we only get the domain name
@@ -74,6 +80,9 @@ module Scraper
         company.save
 
         return
+      rescue Selenium::WebDriver::Error::StaleElementReferenceError
+        # sometimes this bugs out, lets just return and do it again at some point
+        return
       end
 
       # 6. Lets grab a location (sometimes its unavailable)
@@ -81,6 +90,9 @@ module Scraper
         company.location = @driver.find_element(:xpath,
                                                 '/html/body/chrome/div/mat-sidenav-container/mat-sidenav-content/div/ng-component/entity-v2/page-layout/div/div/div/page-centered-layout[2]/div/row-card/div/div[1]/profile-section/section-card/mat-card/div[2]/div/fields-card/ul/li[1]/label-with-icon/span/field-formatter/identifier-multi-formatter/span').text
       rescue Selenium::WebDriver::Error::NoSuchElementError
+      rescue Selenium::WebDriver::Error::StaleElementReferenceError
+        # sometimes this bugs out, lets just return and do it again at some point
+        return
       end
 
       Rails.logger.debug "located in: #{company.location} with a url: #{company.url}"
@@ -106,6 +118,9 @@ module Scraper
         titles = @driver.find_elements(:xpath, "//contact-details//div[@class='jobInfo']//div[1]")
       rescue Selenium::WebDriver::Error::NoSuchElementError
         Rails.logger.debug 'no people found'
+        return
+      rescue Selenium::WebDriver::Error::StaleElementReferenceError
+        # sometimes this bugs out, lets just return and do it again at some point
         return
       end
 
