@@ -6,6 +6,12 @@ namespace :crunchbase do
 
     bot = Scraper::Bot.new
     companies = Company.where(found: false, error: false, agent: ENV['AGENT_CODENAME'])
+
+    if companies.count.zero?
+      puts 'there are no companies left to scrape'
+      return
+    end
+    
     bot.scrape(companies: companies)
   end
 
