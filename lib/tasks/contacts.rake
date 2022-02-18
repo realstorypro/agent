@@ -1,7 +1,7 @@
 namespace :contacts do
   desc 'invokes all contact processing tasks in sequence'
   task process: :environment do
-    Rake::Task['contacts:enrich'].invoke
+    # Rake::Task['contacts:enrich'].invoke
     Rake::Task['contacts:find_email'].invoke
     Rake::Task['contacts:upload'].invoke
   end
@@ -51,7 +51,7 @@ namespace :contacts do
   task :find_email, [:number] => :environment do |_t, args|
     msg_slack("Finding emails for #{args[:number]} contacts")
 
-    contacts = Contact.where(enriched: true, invalid_email: false, uploaded: false, email: nil).limit(args[:number])
+    contacts = Contact.where(invalid_email: false, uploaded: false, email: nil).limit(args[:number])
 
     contacts.each do |contact|
       begin
