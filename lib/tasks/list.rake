@@ -2,17 +2,11 @@ namespace :list do
   list_loc = '/lists'
 
   desc 'builds a list from the clipboard'
-  task build, [:number] => :environment do |_t, args|
+  task :build, [:number] => :environment do |_t, args|
     # set the folder where the import is stored
     @list_folder = "#{Dir.pwd}#{list_loc}/"
 
-    prompt = TTY::Prompt.new
-
-    prompt.warn '---------------------------'
-    prompt.warn 'Welcome to the list builder'
-    prompt.warn '---------------------------'
-
-    @list_number = prompt.ask 'What is the list number?', convert: :int
+    @list_number = args[:number]
 
     Dir.mkdir "#{@list_folder}#{@list_number}"
 
@@ -50,7 +44,7 @@ namespace :list do
   end
 
   desc 'uploads a list stored in a numbered folder'
-  task upload, [:number] => :environment do |_t, args|
+  task :upload, [:number] => :environment do |_t, args|
     # set the folder where the import is stored
     import_folder = Dir.pwd + list_loc + "/#{args[:number]}"
 
