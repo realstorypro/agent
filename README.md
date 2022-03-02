@@ -2,7 +2,7 @@
 "Nobody can give you freedom. Nobody can give you equality or justice or anything. If you're a man, you take it." — Malcom X
 
 ### Features
-- [ ] Distributed Crunchbase Companies Prospecting
+- [x] Companies Prospecting
 - [x] Distributed Crunchbase Company Scrape
 - [x] Contact Enrichment
 - [x] Customer.Io Upload
