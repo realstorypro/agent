@@ -34,3 +34,4 @@
 
 /mitmproxy/__pycache__/
 dump.sql
+/lists/*
