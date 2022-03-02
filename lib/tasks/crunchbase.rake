@@ -11,11 +11,7 @@ namespace :crunchbase do
       puts 'there are no companies left to scrape'
       return
     end
-    
-    bot.scrape(companies: companies)
-  end
 
-  desc 'TODO'
-  task prospect: :environment do
+    bot.scrape(companies: companies)
   end
 end

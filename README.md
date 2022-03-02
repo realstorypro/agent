@@ -24,6 +24,17 @@ brew install mitmproxy
 
 ## Usage
 
+### Prospecting Crunchbase
+1. Build a list
+```bash
+rake list:build
+```
+
+2. Upload the list
+```bash
+rake list:upload
+```
+
 ### Scraping Crunchbase
 1. Take companies to scrape (550 Max)
 ```bash
