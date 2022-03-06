@@ -47,8 +47,13 @@ rake crunchbase:scrape
 ```
 
 ### Uploading to Customer.io
-_Note:_ This enriches and uploads __all__ contacts not just the ones assigned to the agent.
+_Note:_ This uploads __all__ contacts not just the ones assigned to the agent. It's best to run this after 5pm (MST) so that we can run enchance right after
 
 ```bash
 rake contacts:process
+```
+
+### Enrich contacts w/ Timezone info
+```bash
+rake contacts:enrich 
 ```
