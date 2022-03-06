@@ -159,7 +159,7 @@ namespace :contacts do
         timezone: contact.timezone,
         twitter: contact.twitter,
         linkedin_url: contact.linkedin_url,
-        source: 'agent2'
+        source: ENV['UPLOAD_SOURCE']
       )
 
       $customerio.track(contact.email, 'begin nurture')
