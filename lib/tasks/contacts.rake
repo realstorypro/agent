@@ -1,7 +1,6 @@
 namespace :contacts do
   desc 'invokes all contact processing tasks in sequence'
   task process: :environment do
-    # Rake::Task['contacts:enrich'].invoke
     Rake::Task['contacts:find_email'].invoke
     Rake::Task['contacts:upload'].invoke
   end
@@ -10,7 +9,8 @@ namespace :contacts do
   task :enrich, [:number] => :environment do |_t, args|
     msg_slack("Enriching #{args[:number]} contacts")
 
-    contacts = Contact.where(enriched: false, invalid_email: false, uploaded: false).limit(args[:number])
+    contacts = Contact.where(enriched: false, invalid_email: false, uploaded: true).where.not(email: nil).limit(args[:number])
+
     puts "Enriching #{contacts.count}..."
 
     contacts.each do |contact|
@@ -44,6 +44,14 @@ namespace :contacts do
         HTTParty.get("https://maps.googleapis.com/maps/api/timezone/json?key=#{ENV['GOOGLE_MAPS_KEY']}&censor=false&timestamp=1331161200&location=#{contact.lat},#{contact.lng}")
 
       contact.update(timezone: timezone_resp['timeZoneId'], enriched: true)
+
+      puts "enriching #{contact.email}"
+
+      customerio = Customerio::Client.new(ENV['CUSTOMER_IO_SITE_ID'], ENV['CUSTOMER_IO_KEY'])
+      customerio.identify(
+        id: contact.email,
+        timezone: contact.timezone
+      )
     end
   end
 
@@ -151,7 +159,7 @@ namespace :contacts do
         timezone: contact.timezone,
         twitter: contact.twitter,
         linkedin_url: contact.linkedin_url,
-        source: 'agent'
+        source: 'agent2'
       )
 
       $customerio.track(contact.email, 'begin nurture')

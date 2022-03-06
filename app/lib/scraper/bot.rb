@@ -13,7 +13,7 @@ module Scraper
       options.add_argument("--proxy-server=http://#{HEADLESS_PROXY}")
       options.add_argument('--ignore-ssl-errors=yes')
       options.add_argument('--ignore-certificate-errors')
-      # options.add_argument("--user-agent=Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.102 Safari/537.360")
+      options.add_argument(ENV['BROWSER_AGENT']) if ENV['BROWSER_AGENT']
 
       @driver = Selenium::WebDriver::Driver.for :chrome, capabilities: options
     end
