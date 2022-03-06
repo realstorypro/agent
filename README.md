@@ -46,6 +46,11 @@ rake agent:take
 rake crunchbase:scrape
 ```
 
+3. Stop the scraper with
+```bash
+kill $(ps aux | grep '[s]crape' | awk '{print $2}')
+```
+
 ### Uploading to Customer.io
 _Note:_ This uploads __all__ contacts not just the ones assigned to the agent. It's best to run this after 5pm (MST) so that we can run enchance right after
 
