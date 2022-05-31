@@ -84,6 +84,10 @@ namespace :contacts do
         # if for some reason we get nothing just skip.
         next if email_finder_resp.nil?
 
+        # if we get an error without the message lets skip it too
+        next if email_finder_resp.parsed_response['errors'].nil?
+
+
         case email_finder_resp.parsed_response['errors'][0]['details']
         when 'Last name cannot only be made up of single letters'
           contact.update(invalid_email: true)
@@ -98,6 +102,9 @@ namespace :contacts do
           contact.update(invalid_email: true)
           next
         when 'First name cannot only be made up of single letters'
+          contact.update(invalid_email: true)
+          next
+        when 'Last name cannot only be made up of single letters'
           contact.update(invalid_email: true)
           next
         when "The person behind this email address has asked us directly or indirectly to stop the processing of this email. Therefore, you shouldn't process this email yourself in any way."
